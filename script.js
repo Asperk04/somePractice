@@ -1,31 +1,23 @@
 "use strict";
-let numberOfFilms; 
-
-function start() {
-    numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", " ");
-
-    while (numberOfFilms == ' ' || numberOfFilms == null || isNaN(numberOfFilms)){
-
-         numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?", " ");
-    }
-}
-start();
 
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
     geners: [],
-    private: false
-};
+    private: false,
+    start: function() {
+    personalMovieDB.count = +prompt("Сколько фильмов вы уже посмотрели?", " ");
 
+    while (personalMovieDB.count == ' ' || personalMovieDB.count == null || isNaN(personalMovieDB.count)){
 
-
-
-function rememberMyFilms () {
+         personalMovieDB.count = +prompt("Сколько фильмов вы уже посмотрели?", " ");
+    }
+},
+    rememberMyFilms: function() {
 
     for (let i = 0; i < 2; i++){
-    const a = prompt("Один из последних просотренных фильмов?", " "),
+    const a = prompt("Один из последних просотренных фильмов?", " ").trim(),
           b = prompt("На сколько вы оцените его?", " ");
 
     if (a != null && b != null && a != " " && b != " " && a.length < 50 && b.length < 50){
@@ -36,12 +28,8 @@ function rememberMyFilms () {
         i--;
     }      
 }
-}
-
-rememberMyFilms();
-
-
-function detectPersonalLevel () {
+},
+    detectPersonalLevel: function () {
     if(personalMovieDB.count < 10){
     console.log("Просмотренно мало фильмов");
 } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30){
@@ -51,27 +39,53 @@ function detectPersonalLevel () {
 } else {
     console.log('Произошла ошибка');
 }
-}
-detectPersonalLevel();
-
-function showMyDB(hidden){
+},
+    showMyDB: function (hidden){
     if(!hidden){
         console.log(personalMovieDB);
     }
-    }
+    },
 
+    toggleVisibleMyDB: function(){
+        if(personalMovieDB.private){
+            personalMovieDB.private = false;
+        }else{
+            personalMovieDB.private = true;
+        }
 
-showMyDB(personalMovieDB.private);
-
-
-function writeYourGenres (){
+    },
+    writeYourGenres: function(){
     for (let i = 1; i <= 3; i++){
         const genre = prompt(`Ваш любимой жанр под номером ${i}`);
-        personalMovieDB.geners[i - 1] = genre;
-    }
-}
 
-writeYourGenres();
+        if(genre == '' || genre == null){
+            console.log("Вы ввели не корректные данные")
+            i--;
+        }else{
+            personalMovieDB.geners[i - 1] = genre;
+        }   
+    }
+    personalMovieDB.geners.forEach((item, i) => {
+        console.log(`Любимый жанр ${i + 1} - это ${item}`)
+    });
+
+ 
+}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -222,3 +236,177 @@ writeYourGenres();
 
 // console.log(parseInt(test));
 // console.log(parseFloat(test));
+
+// const options = {
+//     name: "test",
+//     width: 1024,
+//     heihht: 1024,
+//     colors: {
+//         border: "black",
+//         bg: "red"
+//     },
+//     makeTest: function(){
+//         console.log("Test");
+//     }
+// };
+// options.makeTest();
+// const {border, bg} = options.colors;
+// console.log(bg);
+
+// console.log(Object.keys(options).length);
+    
+
+
+
+// console.log(options.name);
+
+// delete options.name;
+// // console.log(options);
+
+// let counter = 0;
+
+// for (let key in options){
+//     if (typeof(options[key]) == 'object'){
+//         for (let i in options[key]){
+//             console.log(`свойсттво ${i} имеет значение ${options[key][i]}`);
+//             counter++;
+//         }
+//     } else {
+//          console.log(`свойсттво ${key} имеет значение ${options[key]}`);
+//          counter++;
+//     }
+ 
+// }
+// console.log(counter);
+
+
+// let arr = [2, 4, 5, 3, 1, 23, 33];
+
+// arr.forEach (function(item, i, arr) {
+//     console.log(`${i} : ${item} внутри масива ${arr}`);
+// });
+
+// arr.pop();
+// arr.push(22);
+// console.log(arr);
+
+// for (let i = 0; i < arr.length; i++ ){
+//     console.log(arr[i]);
+// }
+
+// for (let value of arr){
+//     console.log(value);
+// }
+
+// let str = prompt(", ");
+// let products = str.split(", ");
+// console.log(products.join(" : "));
+
+// let a = 5;
+//     b = 10;
+
+//  a = b;
+
+//  console.log (a);
+
+//  const obj = {
+//     a: 5,
+//     b: 1
+//  };
+
+//   const coppy = obj;
+//   coppy.a = 10;
+
+// //   console.log(obj);
+// //   console.log(coppy);
+
+//   function cupy (mainObj) {
+//     let copyObj  =  {};
+//     let key;
+//     for (key in mainObj) {
+//         copyObj[key] = mainObj[key];
+//     }
+//     return copyObj;
+// };
+  
+// const number = {
+//     a: 2, 
+//     b: 4,
+//     c: 6,
+//     d: {
+//         x: 7,
+//         y: 9
+//     }
+// };
+
+// const newNumber = cupy(number);
+
+// newNumber.a = 0;
+// console.log(newNumber);
+// console.log(number);
+
+// const add = {
+//     g: 33,
+//     l: 22
+// }
+
+// console.log(Object.assign(number, add));
+
+// const clone = Object.assign({}, add);
+// clone.l = 11;
+
+// console.log(add);
+// console.log(clone);
+
+// const oldArr = [2, 4, 5];
+
+// const newArr = oldArr.slice();
+// newArr[0] = "fefefee";
+// console.log(oldArr);
+// console.log(newArr);
+
+// const video = ['youtube', 'rutube', 'xuyubi'];
+// const blog = ["new Jurnal", "Blogers"];
+// const internet = [...video, ...blog, "inst"];
+// console.log(internet);
+
+
+// const personalPlanPeter = {
+//     name: "Peter",
+//     age: "29",
+//     skills: {
+//         languages: ['ru', 'eng'],
+//         programmingLangs: {
+//             js: '20%',
+//             php: '10%'
+//         },
+//         exp: '1 month'
+//     }
+// };
+
+// function showExperience(personalPlan) {
+//   // Деструктурируем объект, чтобы получить опыт из skills
+//   const { skills: { exp } } = personalPlan;
+
+//   // Возвращаем строку с опытом
+//   return exp;
+// }
+
+
+// const soldier = {
+//     health: 500,
+//     armor: 200,
+//     sayHello: function(){
+//         console.log("Hellow");
+//     }
+// };
+
+// const jhon = Object.create(soldier);
+
+// // const jhon = {
+// //     health: 100
+// // };
+
+// // Object.setPrototypeOf(jhon, soldier);
+
+// jhon.sayHello();
